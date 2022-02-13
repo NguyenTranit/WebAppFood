@@ -1,0 +1,136 @@
+<h2 style="color: red;">Danh muc Thuc Don</h2>
+
+<hr />
+
+<div class="row">
+
+    <div class="col-lg-5">
+        
+        <form id="category-form">
+            <div class="form-group">
+                <label for="category-name">Enter name</label>
+                <input type="text" class="form-control" id="category-name" />
+
+            </div>
+           
+        </form>
+        <hr>
+        <button id="Insbtn" class="btn btn-primary">Insert</button>
+        <button id="Updsbtn" class="btn btn-primary">Update</button>
+        <button id="Delsbtn" class="btn btn-danger">Delete</button>
+        <br> <br>
+    </div>
+
+    <div class="col-lg-7">
+        <h4 style="color: red;">Saved Category</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>                  
+              
+                </tr>
+            </thead>
+            <tbody id="categories">
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-analytics.js";
+  
+    const firebaseConfig = {
+        apiKey: "AIzaSyBVmJeyQO64iq_QvPxqOrsIaExSDm8Y_iY",
+        authDomain: "congthucgiadinh.firebaseapp.com",
+        databaseURL: "https://congthucgiadinh-default-rtdb.firebaseio.com",
+        projectId: "congthucgiadinh",
+        storageBucket: "congthucgiadinh.appspot.com",
+        messagingSenderId: "707721881681",
+        appId: "1:707721881681:web:d8a8deeb5878c8d29ab070",
+        measurementId: "G-8S649Y41WX"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    import { getDatabase, ref, set, child, update, remove }
+        from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"
+    const db = getDatabase();
+   
+    var name = document.getElementById("category-name");
+  
+    var insBtn = document.getElementById("Insbtn");
+    var updBtn = document.getElementById("Updsbtn");
+    var delBtn = document.getElementById("Delsbtn");
+
+
+    function insertData() {
+        set(ref(db, "ThucDon/"  + name.value),{
+            name:name.value
+        })
+            .then(() => {
+                alert(" insert data stored successfully");
+                resetForm() ;
+            }).catch((error) => {
+                alert("unseccessful,error" + error);
+            });
+    }
+    function updateData() {
+        update(ref(db, "ThucDon/"  + name.value),{
+            name:name.value
+        })
+            .then(() => {
+                alert(" update data stored successfully");
+                resetForm() ;
+            }).catch((error) => {
+                alert("unseccessful,error" + error);
+            });
+    }
+    function deleteData() {
+        remove(ref(db, "ThucDon/" + name.value))
+            .then(() => {
+                alert(" delete data stored successfully");
+                resetForm() ;
+            }).catch((error) => {
+                alert("unseccessful,error" + error);
+            });
+    }
+    insBtn.addEventListener("click", insertData);
+    updBtn.addEventListener("click", updateData);
+    delBtn.addEventListener("click", deleteData);
+    function resetForm() {
+        $("#category-form")[0].reset();
+    }
+
+
+    var dbCategories = firebase.database().ref("ThucDon/");
+
+    dbCategories.on("value", function (categories) {
+
+        if (categories.exists()) {
+            var categorieshtml = "";
+            categories.forEach(function (category) {
+
+                categorieshtml += "<tr>";
+
+                categorieshtml += "<td>";
+                categorieshtml += category.key;
+                categorieshtml += "</td>";
+
+
+
+                categorieshtml += "</tr>";
+
+
+            });
+
+            $("#categories").html(categorieshtml);
+        }
+
+    });
+
+</script>

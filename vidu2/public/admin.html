@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="h-100">
+    <!-- shift+ Alt+F  : căn chỉnh code-->
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+
+</head>
+
+<body class="h-100">
+    <div class="row h-100 bg-light">
+        <div class="col-lg-2 bg-secondary">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <center>
+                        <img id="logo" src="title2.png" alt="3 bữa 1 ngày" width="150" height="150">
+                    </center>
+                    <hr>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="switchView('category.html')">
+                        <span class="text-light">Category</span>
+                        <hr>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="switchView('DetailCategories.html')">
+                        <span class="text-light">Detail Categories</span>
+                        <hr>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="switchView('SliderMeal.html')">
+                        <span class="text-light">SliderMeal</span>
+                        <hr>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="switchView('ThucDon.html')">
+                        <span class="text-light">ThucDon</span>
+                        <hr>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="switchView('MenuMeal.html')">
+                        <span class="text-light">MenuMeal</span>
+                        <hr>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-10">
+
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#"> </a>
+                    <div>
+                        <span id="emailShow" class="text-dark">adminManager@gmail.com</span>
+                        <button id="btn-logout" type="button" class="bg-warning" onclick="logout()"> Logout </button>
+
+                    </div>
+
+                </div>
+            </nav>
+
+            <div class="container" id="container">
+                <img id="myImg" src="update.png" width="100%" height="100%">
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <!-- <script>
+        
+                firebase.auth().onAuthStateChanged(function(user){
+                    if(!user){
+                        window.location.href = "index.html";
+                    }
+                });
+    
+        </script> -->
+</body>
+
+</html>

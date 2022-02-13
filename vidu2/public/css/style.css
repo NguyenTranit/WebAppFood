@@ -1,0 +1,23 @@
+#login-card{
+    width:450px;
+    margin:150px auto;
+}
+
+#container{
+    margin-top:25px;
+}
+#myImg {
+    border-radius: 40px;
+  }
+  #logo {
+    margin-top:20px;
+    border-radius: 25px;
+  }
+  #emailShow{
+      margin-right: 20px;
+  }
+  #nav{
+      margin-top: 10px;
+  }
+
+

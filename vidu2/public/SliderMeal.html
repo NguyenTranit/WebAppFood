@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>admin manager</title>
+    <style>
+        label {
+            display: inline-block;
+            width: 80px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+</head>
+
+<body> 
+     <h1 style="color: red;">SliderMeal</h1>
+    <center>
+      
+        <hr> <button id="Insbtn" class="btn btn-primary">Insert</button>
+        <button id="Selbtn" class="btn btn-primary">Select</button>
+        <button id="Updsbtn" class="btn btn-primary">Update</button>
+        <button id="Delsbtn" class="btn btn-danger">Delete</button>
+        <br>
+        <br>
+     
+        <form id="category-form">
+            <div class="row">
+            <div class="col-lg-4">
+                <br><br>
+                <label> name</label><input id="name" type="text"><br> <br>
+                <label> timer</label><input id="timer" type="text"><br> <br>
+                <label> youtube</label><input id="youtube" type="text"><br> <br>
+                <label> ingredient</label>
+                <input id="ingredient" type="text"><br> <br>
+                <label> search</label><input id="search" type="text"><br> <br>
+                <div class="form-control">
+                    <label> image</label> <input type="file" id="file" /> <br> <br>
+                    <progress id="progress_bar" style="width: 0%">0%</progress>
+
+                    <input type="text" id="image" />
+                </div>
+                <br>
+
+            </div>
+            <div class="col-lg-4">
+               
+                <div class="form-control">
+                    <label> describe</label> <textarea id="describe" name="describe"></textarea>
+                    <label> imgStep1</label> <input type="text" id="imgStep1" /> <br>
+                    <input type="file" id="file1" /> <br>
+                    <progress id="progress_bar1"style="width: 0%">0%</progress>
+
+
+                </div>
+                <br>
+
+                <div class="form-control">
+                    <label> describe2</label> <textarea id="describe2" name="describe"></textarea>
+                    <label> imgStep2</label> <input type="text" id="imgStep2" /> <br>
+                    <input type="file" id="file2" /> <br>
+                    <progress id="progress_bar2" style="width: 0%">0%</progress>
+
+
+                </div>
+                <br>
+                <div class="form-control">
+                    <label> describe3</label> <textarea id="describe3" name="describe"></textarea>
+                    <label> imgStep3</label> <input type="text" id="imgStep3" /> <br>
+                    <input type="file" id="file3" /> <br>
+                    <progress id="progress_bar3"style="width: 0%">0%</progress>
+
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+               
+                <div class="form-control">
+                    <label> describe4</label> <textarea id="describe4" name="describe"></textarea>
+                    <label> imgStep4</label> <input type="text" id="imgStep4" /> <br>
+                    <input type="file" id="file4" /> <br>
+                    <progress id="progress_bar4"style="width: 0%">0%</progress>
+
+
+                </div>
+                <br>
+                <div class="form-control">
+                    <label> describe5</label> <textarea id="describe5" name="describe"></textarea>
+                    <label> imgStep5</label> <input type="text" id="imgStep5" /> <br>
+                    <input type="file" id="file5" /> <br>
+                    <progress id="progress_bar5"style="width: 0%">0%</progress>
+
+
+                </div>
+                <br>
+                <div class="form-control">
+                    <label> describe6</label> <textarea id="describe6" name="describe"></textarea>
+                    <label> imgStep6</label> <input type="text" id="imgStep6" /> <br>
+                    <input type="file" id="file6" /> <br>
+                    <progress id="progress_bar6"style="width: 0%">0%</progress>
+
+
+                </div>
+            </div>
+
+        </div>
+        <br> <br>
+    
+        </form>
+
+    </center>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVmJeyQO64iq_QvPxqOrsIaExSDm8Y_iY",
+            authDomain: "congthucgiadinh.firebaseapp.com",
+            databaseURL: "https://congthucgiadinh-default-rtdb.firebaseio.com",
+            projectId: "congthucgiadinh",
+            storageBucket: "congthucgiadinh.appspot.com",
+            messagingSenderId: "707721881681",
+            appId: "1:707721881681:web:d8a8deeb5878c8d29ab070",
+            measurementId: "G-8S649Y41WX"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL }
+            from "https://www.gstatic.com/firebasejs/9.1.0/firebase-storage.js"
+        import { getDatabase, ref, get,set, child, update, remove }
+            from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"
+        const db = getDatabase();
+        const storage = getStorage();
+        var name = document.getElementById("name");
+        var timer = document.getElementById("timer");
+        var youtube = document.getElementById("youtube");
+        var ingredient = document.getElementById("ingredient");
+        var search = document.getElementById("search");
+        var image = document.getElementById("image");
+        var imgStep1 = document.getElementById("imgStep1");
+        var imgStep2 = document.getElementById("imgStep2");
+        var imgStep3 = document.getElementById("imgStep3");
+        var imgStep4 = document.getElementById("imgStep4");
+        var imgStep5 = document.getElementById("imgStep5");
+        var imgStep6 = document.getElementById("imgStep6");
+        var describe = document.getElementById("describe");
+        var describe2 = document.getElementById("describe2");
+        var describe3 = document.getElementById("describe3");
+        var describe4 = document.getElementById("describe4");
+        var describe5 = document.getElementById("describe5");
+        var describe6 = document.getElementById("describe6");
+        var insBtn = document.getElementById("Insbtn");
+        var updBtn = document.getElementById("Updsbtn");
+        var delBtn = document.getElementById("Delsbtn");
+        var selbtn = document.getElementById("Selbtn");
+        var file = document.getElementById("file");
+        var file1 = document.getElementById("file1");
+        var file2 = document.getElementById("file2");
+        var file3 = document.getElementById("file3");
+        var file4 = document.getElementById("file4");
+        var file5 = document.getElementById("file5");
+        var file6 = document.getElementById("file6");
+        var progressBar = document.getElementById("progress_bar");
+        var progressBar1 = document.getElementById("progress_bar1");
+        var progressBar2 = document.getElementById("progress_bar2");
+        var progressBar3 = document.getElementById("progress_bar3");
+        var progressBar4 = document.getElementById("progress_bar4");
+        var progressBar5 = document.getElementById("progress_bar5");
+        var progressBar6 = document.getElementById("progress_bar6");
+
+         ////upload image
+         file.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/" + file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar").fadeIn();
+                $("#progress_bar").html(progress + "%");
+                $("#progress_bar").attr("style", "width:" + progress + "%");
+                progressBar.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        image.value = url;
+                    });
+                }
+            );
+        });
+        file1.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/"+ file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar1").fadeIn();
+                $("#progress_bar1").html(progress + "%");
+                $("#progress_bar1").attr("style", "width:" + progress + "%");
+                progressBar1.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        imgStep1.value = url;
+                    });
+                }
+            );
+        });
+        file2.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/"  + file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar2").fadeIn();
+                $("#progress_bar2").html(progress + "%");
+                $("#progress_bar2").attr("style", "width:" + progress + "%");
+                progressBar2.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        imgStep2.value = url;
+                    });
+                }
+            );
+        });
+        file3.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/"+ file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar3").fadeIn();
+                $("#progress_bar3").html(progress + "%");
+                $("#progress_bar3").attr("style", "width:" + progress + "%");
+                progressBar3.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        imgStep3.value = url;
+                    });
+                }
+            );
+        });
+        file4.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/" + file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar4").fadeIn();
+                $("#progress_bar4").html(progress + "%");
+                $("#progress_bar4").attr("style", "width:" + progress + "%");
+                progressBar4.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        imgStep4.value = url;
+                    });
+                }
+            );
+        });
+        file5.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/"  + file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar5").fadeIn();
+                $("#progress_bar5").html(progress + "%");
+                $("#progress_bar5").attr("style", "width:" + progress + "%");
+                progressBar5.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        imgStep5.value = url;
+                    });
+                }
+            );
+        });
+        file6.addEventListener('change', (event) => {
+            var file = event.target.files[0];
+            const storageref = sRef(storage, "SliderMeal/" + file.name);
+
+            const uploadTask = uploadBytesResumable(storageref, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                $("#progress_bar6").fadeIn();
+                $("#progress_bar6").html(progress + "%");
+                $("#progress_bar6").attr("style", "width:" + progress + "%");
+                progressBar6.value = progress;
+            },
+                (error) => {
+                    alert("error : image not uploaded");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+
+                        console.log(url);
+                        imgStep6.value = url;
+                    });
+                }
+            );
+        });
+
+        function insertData() {
+            set(ref(db, "SliderMeal/" + name.value), {
+                name: name.value,
+                timer: timer.value,
+                youtube: youtube.value,
+                ingredient: ingredient.value,
+                search: search.value,
+                image: image.value,
+                imgStep1: imgStep1.value,
+                imgStep2: imgStep2.value,
+                imgStep3: imgStep3.value,
+                imgStep4: imgStep4.value,
+                imgStep5: imgStep5.value,
+                imgStep6: imgStep6.value,
+                describe: describe.value,
+                describe2: describe2.value,
+                describe3: describe3.value,
+                describe4: describe4.value,
+                describe5: describe5.value,
+                describe6: describe6.value
+
+            })
+                .then(() => {
+                    alert(" insert data stored successfully");
+                    resetForm();
+                }).catch((error) => {
+                    alert("unseccessful,error" + error);
+                });
+        }
+        function updateData() {
+            update(ref(db, "SliderMeal/" + name.value), {
+                name: name.value,
+                timer: timer.value,
+                youtube: youtube.value,
+                ingredient: ingredient.value,
+                search: search.value,
+                image: image.value,
+                imgStep1: imgStep1.value,
+                imgStep2: imgStep2.value,
+                imgStep3: imgStep3.value,
+                imgStep4: imgStep4.value,
+                imgStep5: imgStep5.value,
+                imgStep6: imgStep6.value,
+                describe: describe.value,
+                describe2: describe2.value,
+                describe3: describe3.value,
+                describe4: describe4.value,
+                describe5: describe5.value,
+                describe6: describe6.value
+
+            })
+                .then(() => {
+                    alert(" update data stored successfully");
+                     resetForm();
+
+                }).catch((error) => {
+                    alert("unseccessful,error" + error); 
+                  
+                });
+        }
+        function selectData() {
+            const dbref = ref(db);
+            get(child(dbref, "SliderMeal/" + name.value)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    name.value = snapshot.val().name;
+                    timer.value = snapshot.val().timer,
+                        youtube.value = snapshot.val().youtube,
+                        ingredient.value = snapshot.val().ingredient,
+                        search.value = snapshot.val().search,
+                        image.value = snapshot.val().image,
+                        imgStep1.value = snapshot.val().imgStep1,
+                        imgStep2.value = snapshot.val().imgStep2,
+                        imgStep3.value = snapshot.val().imgStep3,
+                        imgStep4.value = snapshot.val().imgStep4,
+                        imgStep5.value = snapshot.val().imgStep5,
+                        imgStep6.value = snapshot.val().imgStep6,
+                        describe.value = snapshot.val().describe,
+                        describe2.value = snapshot.val().describe2,
+                        describe3.value = snapshot.val().describe3,
+                        describe4.value = snapshot.val().describe4,
+                        describe5.value = snapshot.val().describe5,
+                        describe6.value = snapshot.val().describe6
+                }else{
+                    alert("no data found");
+                }
+            })
+            .catch((error)=>{
+                alert("unsuccessful,error"+error);
+            });
+        }
+        function deleteData() {
+            remove(ref(db, "SliderMeal/" + name.value))
+                .then(() => {
+                    alert(" delete data stored successfully");
+                    resetForm();
+                }).catch((error) => {
+                    alert("unseccessful,error" + error);
+                });
+        }
+        insBtn.addEventListener("click", insertData);
+        updBtn.addEventListener("click", updateData);
+        delBtn.addEventListener("click", deleteData);
+        selbtn.addEventListener("click", selectData);
+        function resetForm() {
+            $("#category-form")[0].reset();
+            $("#progress_bar").fadeOut();
+            $("#progress_bar1").fadeOut();
+            $("#progress_bar2").fadeOut();
+            $("#progress_bar3").fadeOut();
+            $("#progress_bar4").fadeOut();
+            $("#progress_bar5").fadeOut();
+            $("#progress_bar6").fadeOut();
+
+        }
+
+    </script>
+</body>
+
+</html>
